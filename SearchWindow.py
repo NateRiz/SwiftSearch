@@ -11,6 +11,7 @@ class SearchWindow:
         self.root.bind("<FocusOut>", self.exit_window)
         self.animate_in()
 
+
     def animate_in(self, begin = time.time(), end = time.time()+.3):
         """
 

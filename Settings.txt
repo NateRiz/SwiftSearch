@@ -1,24 +1,30 @@
-{
-google.com
-google.png
-https://www.google.com/search?{}
-%20
-}
-{
-facebook.com
-facebook.png
-https://www.facebook.com/search/str/{}/keywords_search
-+
-}
-{
-amazon.com
-amazon.png
-https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={}
-+
-}
-{
-alibaba.com
-alibaba.png
-https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={}
-+
-}
+[
+    {
+        "site" : "google.com",
+        "img" : "google.png",
+        "search" : "https://www.google.com/search?{}",
+        "separator" : "%20",
+        "priority" : 10
+    },
+    {
+        "site" : "facebook.com",
+        "img" : "facebook.png",
+        "search" : "https://www.facebook.com/search/str/{}/keywords_search",
+        "separator" : "+",
+        "priority" : 0
+    },
+    {
+        "site" : "amazon.com",
+        "img" : "amazon.png",
+        "search" : "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={}",
+        "separator" : "+",
+        "priority" : 0
+    },
+    {
+        "site" : "alibaba.com",
+        "img" : "alibaba.png",
+        "search" : "https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={}",
+        "separator" : "+",
+        "priority" : 0
+    }
+]
