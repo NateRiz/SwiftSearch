@@ -5,7 +5,7 @@ def main():
     websites = get_websites()
     if not websites:
         return
-    search = SearchWindow()
+    search = SearchWindow(websites)
     search.update()
 
 def get_websites() -> list():

@@ -1,14 +1,16 @@
 from tkinter import *
 import time
 class SearchWindow:
-    def __init__(self):
+    def __init__(self, websites):
         self.screen_size = None
+        self.all_websites = websites
+        self.filtered_websites = websites
         self.root = self.create_root()
         self.query = StringVar()
         self.input_field = self.create_input()
 
         self.input_field.focus_set()
-        self.root.bind("<FocusOut>", self.exit_window)
+        self.root.bind("<FocusOut>", self.key_press)
         self.animate_in()
 
 
@@ -49,6 +51,20 @@ class SearchWindow:
         input_field.bind("<Key>", self.start_search)
         input_field.place(relx=0.5, rely=0.5, anchor=CENTER)
         return input_field
+
+    def key_press(self, event):
+        """
+        
+        :param event:
+        :return:
+        """
+        default = "Type a website: eg: facebook.com"
+        if event.keysym == "BackSpace" or self.query.get() == default:
+            self.start_search(event)
+
+        else:
+            print(event.keysym)
+
 
     def start_search(self, event):
         """
