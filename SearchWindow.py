@@ -1,19 +1,25 @@
 from tkinter import *
+from PIL import ImageTk
+from PIL import Image
 import time
+import webbrowser
 class SearchWindow:
     def __init__(self, websites):
         self.screen_size = None
         self.all_websites = websites
         self.filtered_websites = list(websites)
         self.root = self.create_root()
+        self.img = None
+        self.background = Label(self.root, image=self.img)
+        self.background.place(x=0, y=0, relwidth=1, relheight=1)
         self.hidden_search=""
         self.suggestion = StringVar()
+        self.suggested_website = None
         self.input_field = self.create_input()
 
         self.input_field.focus_set()
         self.root.bind("<FocusOut>",self.exit_window)
         self.animate_in()
-
 
     def animate_in(self, begin = time.time(), end = time.time()+.3):
         """
@@ -47,7 +53,7 @@ class SearchWindow:
         """
         input_field =Entry(self.root, width = 32, textvariable = self.suggestion, state = "readonly")
         self.suggestion.set("Type a website: eg: facebook.com")
-        input_field.bind("<Return>", self.exit_window)
+        input_field.bind("<Return>", self.search_site)
         input_field.bind("<Escape>", self.exit_window)
         input_field.bind("<Key>",  self.key_press)
         input_field.place(relx=0.5, rely=0.5, anchor=CENTER)
@@ -66,26 +72,47 @@ class SearchWindow:
         else:
             self.hidden_search=self.hidden_search+event.char
 
-        self.update_search()
+        self.update_filter()
+        if self.suggested_website:
+            self.suggestion.set(self.suggested_website.website)
+        else:
+            self.suggestion.set(self.hidden_search)
+
+
         self.input_field.select_range(len(self.hidden_search),END)
-    def update_search(self):
+
+    def update_filter(self):
         """
         :param letter: letter being typed in.
         :return: None
         """
         new_filter = list()
         max_priority = -1
-        suggested = ""
-
+        self.suggested_website = None
         for w in self.filtered_websites:
             if w.website.startswith(self.hidden_search):
                 new_filter.append(w)
                 if w.priority > max_priority:
                     max_priority = w.priority
-                    suggested = w.website
+                    self.suggested_website = w
+        if self.suggested_website:
+            img = Image.open(self.suggested_website.picture)
+            img.putalpha(180)
+            self.img = ImageTk.PhotoImage(img)
+            self.background.configure(image = self.img)
+        else:
+            self.background.configure(image = "")
 
-        self.suggestion.set(suggested)
 
+    def search_site(self, event):
+        """
+        opens browser with whatever is in the suggestion
+        :param event: None
+        :return:None
+        """
+        if self.suggested_website:
+            webbrowser.open(self.suggested_website.search)
+        self.exit_window(None)
 
     def exit_window(self, event):
         """

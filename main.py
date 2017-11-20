@@ -22,5 +22,8 @@ def get_websites() -> list():
 
     return websites
 
+
+
+
 if __name__ == "__main__":
     main()

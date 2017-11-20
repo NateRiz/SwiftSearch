@@ -1,3 +1,4 @@
+from tkinter import PhotoImage
 class Website:
     def __init__(self, website, search, picture, separator, priority=-1):
         self.website = website
