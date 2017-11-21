@@ -56,7 +56,7 @@ class SearchWindow:
         input_field.bind("<Return>", self.search_site)
         input_field.bind("<Escape>", self.exit_window)
         input_field.bind("<Key>",  self.key_press)
-        input_field.place(relx=0.5, rely=0.5, anchor=CENTER)
+        input_field.place(relx = .50, rely = .80, anchor=CENTER)
         return input_field
 
     def key_press(self, event):
@@ -96,13 +96,13 @@ class SearchWindow:
                     max_priority = w.priority
                     self.suggested_website = w
         if self.suggested_website:
-            img = Image.open(self.suggested_website.picture)
+            img = Image.open(r"assets\{}".format(self.suggested_website.picture))
+            img = img.resize((self.root.winfo_width(),self.root.winfo_height()), Image.ANTIALIAS)
             img.putalpha(180)
             self.img = ImageTk.PhotoImage(img)
             self.background.configure(image = self.img)
         else:
             self.background.configure(image = "")
-
 
     def search_site(self, event):
         """
@@ -131,9 +131,5 @@ class SearchWindow:
 
 
 #TODO
-#window in bottom right
-#Animate in
+#Animate in w. y pos
 #Animate out only on <Escape>
-#picture bg
-#default settings ini
-#Search
