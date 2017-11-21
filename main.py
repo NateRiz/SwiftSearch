@@ -1,6 +1,7 @@
 from SearchWindow import SearchWindow
 from Website import Website
 from json import load
+import os
 def main():
     websites = get_websites()
     if not websites:
@@ -11,7 +12,7 @@ def main():
 def get_websites() -> list():
     websites = list()
     try:
-        with open("Settings.txt","r") as settings:
+        with open(os.path.abspath("Settings.txt"),"r") as settings:
             web_json = load(settings)
             for w in web_json:
                 site = Website(w["site"], w["search"], w["img"], w["separator"], w["priority"])

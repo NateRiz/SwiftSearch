@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import ImageTk
 from PIL import Image
 import time
+import os
 import webbrowser
 
 class SearchWindow:
@@ -109,7 +110,7 @@ class SearchWindow:
                     max_priority = w.priority
                     self.suggested_website = w
         if self.suggested_website:
-            img = Image.open(r"assets\{}".format(self.suggested_website.picture))
+            img = Image.open(os.path.abspath("assets\{}".format(self.suggested_website.picture)))
             img = img.resize((self.root.winfo_width(),self.root.winfo_height()), Image.ANTIALIAS)
             img.putalpha(180)
             self.img = ImageTk.PhotoImage(img)
@@ -123,11 +124,11 @@ class SearchWindow:
         :param event: None
         :return:None
         """
-        if self.suggested_website:
+        if self.suggested_website and self.search_query.get():
             site = self.suggested_website.search.format(self.search_query.get()
                                                         .replace(" ", self.suggested_website.separator))
             webbrowser.open(site)
-        self.exit_window(None)
+            self.exit_window(None)
 
     def exit_window(self, event):
         """
