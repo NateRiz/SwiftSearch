@@ -3,6 +3,7 @@ from PIL import ImageTk
 from PIL import Image
 import time
 import webbrowser
+
 class SearchWindow:
     def __init__(self, websites):
         self.screen_size = None
@@ -16,13 +17,13 @@ class SearchWindow:
         self.suggestion = StringVar()
         self.suggested_website = None
         self.input_field = self.create_web_input()
-        self.search_field= self.create_search_input()
 
-        self.search_query = ""
 
-        self.input_field.focus_set()
+        self.search_query = StringVar()
+        self.search_field= None
+
+
         self.root.bind("<FocusOut>",self.exit_window)
-
 
     def create_root(self):
         """
@@ -53,24 +54,23 @@ class SearchWindow:
         input_field.bind("<Escape>",lambda event: self.animate_out(time.time(), time.time()+.3))
         input_field.bind("<Key>",  self.key_press)
         input_field.place(relx = .50, rely = .80, anchor=CENTER)
+        input_field.focus_set()
         return input_field
 
     def create_search_input(self):
         """
-        Creates input field for the root
+        Creates input field for search query
         :return: input field
         """
-        input_field =Entry(self.root, width = 32, textvariable = self.suggestion, state = "readonly")
-        self.suggestion.set("Search...")
+        input_field =Entry(self.root, width = 32, textvariable = self.search_query)
         input_field.bind("<Return>", lambda redirect:
-                                self.transition_input_fields if self.search_query else None)
+                                self.search_site() if self.search_query else None)
         input_field.bind("<Tab>", lambda redirect:
-                                self.transition_input_fields if self.search_query else None)
+                                self.search_site() if self.search_query else None)
 
         input_field.bind("<Escape>",lambda event: self.animate_out(time.time(), time.time()+.3))
-        input_field.bind("<Key>",  self.key_press)
+        input_field.place(relx = 1.5, rely = .80, anchor=CENTER)
         return input_field
-
 
     def key_press(self, event):
         """
@@ -124,19 +124,11 @@ class SearchWindow:
         :param event: None
         :return:None
         """
-        print("???")
-        print(bool(self.suggested_website))
         if self.suggested_website:
-            self.search_query.replace(" ", self.suggested_website.separator)
-            site = self.suggested_website.search.format(self.search_query)
+            site = self.suggested_website.search.format(self.search_query.get()
+                                                        .replace(" ", self.suggested_website.separator))
             webbrowser.open(site)
         self.exit_window(None)
-
-
-    def try_switch_searches(self):
-        if self.suggested_website:
-            self.transition_input_fields()
-
 
     def exit_window(self, event):
         """
@@ -145,7 +137,6 @@ class SearchWindow:
         :return:  None
         """
         self.root.destroy()
-
 
     ###############################
     #Animations
@@ -184,15 +175,25 @@ class SearchWindow:
         pushes input out of screen for search input.
         :return:None
         """
+        TRANSITION_TIME = .2
+        if self.search_field == None:
+            self.search_field = self.create_search_input()
+
         if not begin or not end:
             begin = time.time()
-            end = time.time() +.3
+            end = time.time() + TRANSITION_TIME
 
+        multiplier = (time.time()-begin) / TRANSITION_TIME #0 -> 1.0
 
         if time.time() <= end:
             self.root.after(25, self.transition_input_fields, begin, end)
+            self.input_field.place_configure(relx = .5 - multiplier)
+            self.search_field.place_configure(relx = 1.5 - multiplier)
 
-
+        else:
+            self.input_field.destroy()
+            self.search_field.focus()
+            self.search_field.place_configure(relx=.5)
     #End Animaitons
     ###############################
 
