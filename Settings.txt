@@ -1,88 +1,86 @@
 [
     {
-        "site" : "google.com",
-        "img" : "google.png",
-        "search" : "https://www.google.com/search?{}",
-        "separator" : "%20",
-        "priority" : 10
+        "img": "google.png",
+        "priority": 0
+        "search": "https://www.google.com/search?{}",
+        "separator": "%20",
+        "site": "google.com"
     },
     {
-        "site" : "facebook.com",
-        "img" : "facebook.png",
-        "search" : "https://www.facebook.com/search/str/{}/keywords_search",
-        "separator" : "+",
-        "priority" : 0
+        "img": "facebook.png",
+        "priority": 0,
+        "search": "https://www.facebook.com/search/str/{}/keywords_search",
+        "separator": "+",
+        "site": "facebook.com"
     },
     {
-        "site" : "amazon.com",
-        "img" : "amazon.png",
-        "search" : "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={}",
-        "separator" : "+",
-        "priority" : 0
+        "img": "amazon.png",
+        "priority": 0,
+        "search": "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={}",
+        "separator": "+",
+        "site": "amazon.com"
     },
     {
-        "site" : "alibaba.com",
-        "img" : "alibaba.png",
-        "search" : "https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={}",
-        "separator" : "+",
-        "priority" : 0
+        "img": "alibaba.png",
+        "priority": 0,
+        "search": "https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={}",
+        "separator": "+",
+        "site": "alibaba.com"
     },
     {
-        "site" : "reddit.com",
-        "img" : "reddit.png",
-        "search" : "https://www.reddit.com/search?q={}&sort=relevance&t=all",
-        "separator" : "+",
-        "priority" : 0
+        "img": "reddit.png",
+        "priority": 0,
+        "search": "https://www.reddit.com/search?q={}&sort=relevance&t=all",
+        "separator": "+",
+        "site": "reddit.com"
     },
     {
-        "site" : "quizlet.com",
-        "img" : "quizlet.png",
-        "search" : "https://quizlet.com/subject/{}/",
-        "separator" : "-",
-        "priority" : 0
+        "img": "quizlet.png",
+        "priority": 0,
+        "search": "https://quizlet.com/subject/{}/",
+        "separator": "-",
+        "site": "quizlet.com"
     },
     {
-        "site" : "youtube.com",
-        "img" : "youtube.png",
-        "search" : "https://www.youtube.com/results?search_query={}&page=&utm_source=opensearch",
-        "separator" : "+",
-        "priority" : 0
+        "img": "youtube.png",
+        "priority": 0,
+        "search": "https://www.youtube.com/results?search_query={}&page=&utm_source=opensearch",
+        "separator": "+",
+        "site": "youtube.com"
     },
     {
-        "site" : "twitter.com",
-        "img" : "twitter.png",
-        "search" : "https://twitter.com/search?q={}&src=typd",
-        "separator" : "%20",
-        "priority" : 0
+        "img": "twitter.png",
+        "priority": 0,
+        "search": "https://twitter.com/search?q={}&src=typd",
+        "separator": "%20",
+        "site": "twitter.com"
     },
     {
-        "site" : "linkedin.com",
-        "img" : "linkedin.png",
-        "search" : "https://www.linkedin.com/search/results/index/?keywords={}&origin=GLOBAL_SEARCH_HEADER",
-        "separator" : "%20",
-        "priority" : 0
+        "img": "linkedin.png",
+        "priority": 0,
+        "search": "https://www.linkedin.com/search/results/index/?keywords={}&origin=GLOBAL_SEARCH_HEADER",
+        "separator": "%20",
+        "site": "linkedin.com"
     },
     {
-        "site" : "bing.com",
-        "img" : "bing.png",
-        "search" : "https://www.bing.com/search?q={}",
-        "separator" : "+",
-        "priority" : 0
+        "img": "bing.png",
+        "priority": 0,
+        "search": "https://www.bing.com/search?q={}",
+        "separator": "+",
+        "site": "bing.com"
     },
     {
-        "site" : "wikipedia.com",
-        "img" : "wikipedia.png",
-        "search" : "https://en.wikipedia.org/wiki/Special:Search?search={}",
-        "separator" : "%20",
-        "priority" : 0
+        "img": "wikipedia.png",
+        "priority": 0,
+        "search": "https://en.wikipedia.org/wiki/Special:Search?search={}",
+        "separator": "%20",
+        "site": "wikipedia.com"
     },
     {
-        "site" : "wolframalpha.com",
-        "img" : "wolframalpha.png",
-        "search" : "http://www.wolframalpha.com/input/?i={}",
-        "separator" : "+",
-        "priority" : 10
+        "img": "wolframalpha.png",
+        "priority": 10,
+        "search": "http://www.wolframalpha.com/input/?i={}",
+        "separator": "+",
+        "site": "wolframalpha.com"
     }
-
-
 ]

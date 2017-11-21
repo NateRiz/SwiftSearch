@@ -204,6 +204,7 @@ class SearchWindow:
         """
         self.animate_in(time.time(), time.time()+.3)
         self.root.mainloop()
+        return self.suggested_website.website
 
 
 
