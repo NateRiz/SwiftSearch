@@ -30,6 +30,10 @@ class SearchWindow:
         """
         final_alpha = .8
         alpha = (final_alpha/.3) * (time.time() - begin)
+        if self.root.winfo_height() != 1: #Needs to create root before changing y pos.
+            y_pos = int(self.root.winfo_screenheight()- (3*self.root.winfo_height()/4)
+                        - (1/.3) * (time.time() - begin) * (self.root.winfo_height()/4))
+            self.root.geometry("{}x{}+{}+{}".format(self.root.winfo_width(), self.root.winfo_height(),self.root.winfo_x(),y_pos ))
         self.root.attributes("-alpha",alpha)
         if time.time() <= end:
             self.root.after(25, self.animate_in, begin, end)
@@ -40,7 +44,7 @@ class SearchWindow:
         root = Tk()
         self.screen_size = {"x":root.winfo_screenwidth(), "y":root.winfo_screenheight()}
         frame = {"w":500,"h":200,"x":0,"y":0}
-        frame["y"]=self.screen_size["y"] - frame["h"]
+        frame["y"]=int(self.screen_size["y"] - (3*frame["h"]/4))
         root.title("SwiftSearch - by NateRiz")
         root.geometry("{}x{}+{}+{}".format(frame["w"], frame["h"],frame["x"],frame["y"]))
         root.overrideredirect(1)
@@ -131,5 +135,4 @@ class SearchWindow:
 
 
 #TODO
-#Animate in w. y pos
 #Animate out only on <Escape>
