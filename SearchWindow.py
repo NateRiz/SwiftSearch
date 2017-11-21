@@ -10,58 +10,67 @@ class SearchWindow:
         self.filtered_websites = list(websites)
         self.root = self.create_root()
         self.img = None
-        self.background = Label(self.root, image=self.img)
+        self.background = Label(self.root, image=self.img, bg = "black")
         self.background.place(x=0, y=0, relwidth=1, relheight=1)
         self.hidden_search=""
         self.suggestion = StringVar()
         self.suggested_website = None
-        self.input_field = self.create_input()
+        self.input_field = self.create_web_input()
+        self.search_field= self.create_search_input()
+
+        self.search_query = ""
 
         self.input_field.focus_set()
         self.root.bind("<FocusOut>",self.exit_window)
-        self.animate_in()
 
-    def animate_in(self, begin = time.time(), end = time.time()+.3):
-        """
-
-        :param begin: time when first called
-        :param end: time when first called + total time of aniamtion
-        :return: None
-        """
-        final_alpha = .8
-        alpha = (final_alpha/.3) * (time.time() - begin)
-        if self.root.winfo_height() != 1: #Needs to create root before changing y pos.
-            y_pos = int(self.root.winfo_screenheight()- (3*self.root.winfo_height()/4)
-                        - (1/.3) * (time.time() - begin) * (self.root.winfo_height()/4))
-            self.root.geometry("{}x{}+{}+{}".format(self.root.winfo_width(), self.root.winfo_height(),self.root.winfo_x(),y_pos ))
-        self.root.attributes("-alpha",alpha)
-        if time.time() <= end:
-            self.root.after(25, self.animate_in, begin, end)
-        else:
-            self.root.attributes("-alpha", final_alpha)
 
     def create_root(self):
+        """
+        Creates root window
+        :return: root of the window
+        """
         root = Tk()
         self.screen_size = {"x":root.winfo_screenwidth(), "y":root.winfo_screenheight()}
         frame = {"w":500,"h":200,"x":0,"y":0}
-        frame["y"]=int(self.screen_size["y"] - (3*frame["h"]/4))
+        frame["y"]=int(self.screen_size["y"] - frame["h"])
         root.title("SwiftSearch - by NateRiz")
         root.geometry("{}x{}+{}+{}".format(frame["w"], frame["h"],frame["x"],frame["y"]))
         root.overrideredirect(1)
         return root
 
-    def create_input(self):
+    def create_web_input(self):
         """
         Creates input field for the root
         :return: input field
         """
         input_field =Entry(self.root, width = 32, textvariable = self.suggestion, state = "readonly")
-        self.suggestion.set("Type a website: eg: facebook.com")
-        input_field.bind("<Return>", self.search_site)
-        input_field.bind("<Escape>", self.exit_window)
+        self.suggestion.set("Search...")
+        input_field.bind("<Return>", lambda redirect:
+                                self.transition_input_fields() if self.suggested_website else None)
+        input_field.bind("<Tab>", lambda redirect:
+                                self.transition_input_fields() if self.suggested_website else None)
+
+        input_field.bind("<Escape>",lambda event: self.animate_out(time.time(), time.time()+.3))
         input_field.bind("<Key>",  self.key_press)
         input_field.place(relx = .50, rely = .80, anchor=CENTER)
         return input_field
+
+    def create_search_input(self):
+        """
+        Creates input field for the root
+        :return: input field
+        """
+        input_field =Entry(self.root, width = 32, textvariable = self.suggestion, state = "readonly")
+        self.suggestion.set("Search...")
+        input_field.bind("<Return>", lambda redirect:
+                                self.transition_input_fields if self.search_query else None)
+        input_field.bind("<Tab>", lambda redirect:
+                                self.transition_input_fields if self.search_query else None)
+
+        input_field.bind("<Escape>",lambda event: self.animate_out(time.time(), time.time()+.3))
+        input_field.bind("<Key>",  self.key_press)
+        return input_field
+
 
     def key_press(self, event):
         """
@@ -87,7 +96,8 @@ class SearchWindow:
 
     def update_filter(self):
         """
-        :param letter: letter being typed in.
+        updates current filter of matching websites.
+        Updates image of background if search found.
         :return: None
         """
         new_filter = list()
@@ -108,15 +118,25 @@ class SearchWindow:
         else:
             self.background.configure(image = "")
 
-    def search_site(self, event):
+    def search_site(self):
         """
         opens browser with whatever is in the suggestion
         :param event: None
         :return:None
         """
+        print("???")
+        print(bool(self.suggested_website))
         if self.suggested_website:
-            webbrowser.open(self.suggested_website.search)
+            self.search_query.replace(" ", self.suggested_website.separator)
+            site = self.suggested_website.search.format(self.search_query)
+            webbrowser.open(site)
         self.exit_window(None)
+
+
+    def try_switch_searches(self):
+        if self.suggested_website:
+            self.transition_input_fields()
+
 
     def exit_window(self, event):
         """
@@ -126,12 +146,65 @@ class SearchWindow:
         """
         self.root.destroy()
 
+
+    ###############################
+    #Animations
+    def animate_in(self, begin, end):
+        """
+
+        :param begin: time when first called
+        :param end: time when first called + total time of animation
+        :return: None
+        """
+        final_alpha = .8
+        alpha = (final_alpha/.3) * (time.time() - begin)
+        self.root.attributes("-alpha",alpha)
+        if time.time() <= end:
+            self.root.after(25, self.animate_in, begin, end)
+        else:
+            self.root.attributes("-alpha", final_alpha)
+
+    def animate_out(self, begin, end):
+        """
+        animates window out on escape
+        :param event: calling event. Escape only
+        :return: None
+        """
+        begin_alpha = .8
+        alpha = begin_alpha - (begin_alpha/.3) * (time.time() - begin)
+        self.root.attributes("-alpha",alpha)
+        if time.time() <= end:
+            self.root.after(25, self.animate_out, begin, end)
+        else:
+            self.root.attributes("-alpha", alpha)
+            self.exit_window(None)
+
+    def transition_input_fields(self, begin=None, end=None):
+        """
+        pushes input out of screen for search input.
+        :return:None
+        """
+        if not begin or not end:
+            begin = time.time()
+            end = time.time() +.3
+
+
+        if time.time() <= end:
+            self.root.after(25, self.transition_input_fields, begin, end)
+
+
+    #End Animaitons
+    ###############################
+
     def update(self):
         """
         Updates the mainloop of root
         :return: None
         """
+        self.animate_in(time.time(), time.time()+.3)
         self.root.mainloop()
+
+
 
 
 #TODO

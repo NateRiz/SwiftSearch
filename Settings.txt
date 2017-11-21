@@ -26,5 +26,63 @@
         "search" : "https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={}",
         "separator" : "+",
         "priority" : 0
+    },
+    {
+        "site" : "reddit.com",
+        "img" : "reddit.png",
+        "search" : "https://www.reddit.com/search?q={}&sort=relevance&t=all",
+        "separator" : "+",
+        "priority" : 0
+    },
+    {
+        "site" : "quizlet.com",
+        "img" : "quizlet.png",
+        "search" : "https://quizlet.com/subject/{}/",
+        "separator" : "-",
+        "priority" : 0
+    },
+    {
+        "site" : "youtube.com",
+        "img" : "youtube.png",
+        "search" : "https://www.youtube.com/results?search_query={}&page=&utm_source=opensearch",
+        "separator" : "+",
+        "priority" : 0
+    },
+    {
+        "site" : "twitter.com",
+        "img" : "twitter.png",
+        "search" : "https://twitter.com/search?q={}&src=typd",
+        "separator" : "%20",
+        "priority" : 0
+    },
+    {
+        "site" : "linkedin.com",
+        "img" : "linkedin.png",
+        "search" : "https://www.linkedin.com/search/results/index/?keywords={}&origin=GLOBAL_SEARCH_HEADER",
+        "separator" : "%20",
+        "priority" : 0
+    },
+    {
+        "site" : "bing.com",
+        "img" : "bing.png",
+        "search" : "https://www.bing.com/search?q={}",
+        "separator" : "+",
+        "priority" : 0
+    },
+    {
+        "site" : "wikipedia.com",
+        "img" : "wikipedia.png",
+        "search" : "https://en.wikipedia.org/wiki/Special:Search?search={}",
+        "separator" : "%20",
+        "priority" : 0
+    },
+    {
+        "site" : "wolframalpha.com",
+        "img" : "wolframalpha.png",
+        "search" : "http://www.wolframalpha.com/input/?i={}",
+        "separator" : "+",
+        "priority" : 10
     }
+
+
 ]
