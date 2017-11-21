@@ -22,7 +22,6 @@ class SearchWindow:
         self.search_query = StringVar()
         self.search_field= None
 
-
         self.root.bind("<FocusOut>",self.exit_window)
 
     def create_root(self):
