@@ -4,7 +4,6 @@ from json import load
 from json import dump
 import os
 def main():
-
     websites = list()
     try:
         with open(os.path.abspath("Settings.txt"),"r") as settings:

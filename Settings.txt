@@ -1,7 +1,7 @@
 [
     {
         "img": "google.png",
-        "priority": 0
+        "priority": 0,
         "search": "https://www.google.com/search?{}",
         "separator": "%20",
         "site": "google.com"
@@ -78,7 +78,7 @@
     },
     {
         "img": "wolframalpha.png",
-        "priority": 10,
+        "priority": 0,
         "search": "http://www.wolframalpha.com/input/?i={}",
         "separator": "+",
         "site": "wolframalpha.com"
