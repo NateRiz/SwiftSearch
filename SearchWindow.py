@@ -55,6 +55,7 @@ class SearchWindow:
         input_field.bind("<Key>",  self.key_press)
         input_field.place(relx = .50, rely = .80, anchor=CENTER)
         input_field.focus_set()
+
         return input_field
 
     def create_search_input(self):
@@ -110,7 +111,8 @@ class SearchWindow:
                     max_priority = w.priority
                     self.suggested_website = w
         if self.suggested_website:
-            img = Image.open(os.path.abspath("assets\{}".format(self.suggested_website.picture)))
+            path = os.path.join(os.getcwd(), "assets",self.suggested_website.picture)
+            img = Image.open(path)
             img = img.resize((self.root.winfo_width(),self.root.winfo_height()), Image.ANTIALIAS)
             img.putalpha(180)
             self.img = ImageTk.PhotoImage(img)
